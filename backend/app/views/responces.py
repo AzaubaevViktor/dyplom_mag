@@ -7,5 +7,5 @@ class Resp:
         return data
 
     @staticmethod
-    def ok():
-        return Resp.create(Resp.OK)
+    def ok(**kwargs):
+        return Resp.create(Resp.OK, **kwargs)

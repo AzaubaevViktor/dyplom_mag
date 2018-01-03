@@ -11,3 +11,4 @@ ipython
 flask_sqlalchemy
 psycopg2
 Flask-Migrate
+flask-cors

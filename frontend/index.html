@@ -5,6 +5,63 @@
     <title>Hi!</title>
 </head>
 <body>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <h1> Hi! </h1>
+
+<div id="templates" style="display: none">
+    <div id="status-template">
+        <div>
+            <p>{{ status }}</p>
+            <p>Uptime: {{ uptime }} s</p>
+        </div>
+    </div>
+</div>
+
+<div id="test">
+    <status>Test</status>
+</div>
+<script>
+    let server = "http://172.20.0.1:5000";
+
+    Vue.component('status', {
+        template: '#status-template',
+
+        data: function() {
+            return {
+                status: "Waiting...",
+                uptime: "",
+                timer: ''
+            }
+        },
+        created: function() {
+            console.log("Created");
+            this.fetchEventsList();
+            this.timer = setInterval(this.fetchEventsList, 1500)
+        },
+        methods: {
+            fetchEventsList: function() {
+                console.log("Update...");
+                let vm = this;
+                axios.get(server + "/").then(function(data) {
+                    let resp = data.data;
+                    let uptime = Math.round(1 * resp.uptime);
+                    vm.status = resp.status;
+                    vm.uptime = uptime;
+                });
+            },
+            cancelAutoUpdate: function() { clearInterval(this.timer) }
+        },
+        beforeDestroy() {
+            clearInterval(this.timer)
+        }
+
+    });
+
+    new Vue({
+        el: '#test'
+    })
+</script>
+
 </body>
 </html>
