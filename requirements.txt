@@ -6,3 +6,8 @@ MarkupSafe==1.0
 Werkzeug==0.14.1
 vk==2.0.2
 flask_restful
+flask-konch
+ipython
+flask_sqlalchemy
+psycopg2
+Flask-Migrate

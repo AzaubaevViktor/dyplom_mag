@@ -8,3 +8,6 @@ up: down
 
 build: down
 	$(COMPOSE) build
+
+flask:
+	$(COMPOSE) run backend flask $(cmd) $(args)

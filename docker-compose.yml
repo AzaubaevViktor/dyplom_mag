@@ -8,6 +8,11 @@ services:
      - "5000:5000"
     volumes:
       - ./backend:/usr/src/app
+    links:
+      - postgres
+    environment:
+      FLASK_APP: "app/__init__.py"
+    working_dir: /usr/src/app
     command: python3 run.py runserver
 
   frontend:
@@ -18,5 +23,18 @@ services:
       - ./frontend:/usr/src/app
     ports:
       - "8000:8000"
+    links:
+      - backend
     command: python3 -m http.server
 
+  postgres:
+    image: postgres:10.1
+    volumes:
+      - pg:/var/lib/postgresql/data/pgdata
+    environment:
+      POSTGRES_PASSWORD: admin
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_DB: dyplom
+
+volumes:
+  pg:
