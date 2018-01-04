@@ -9,9 +9,59 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="app.js"></script>
 
+<div id="templates" style="display: none">
+    <div id="vk-app-list-template">
+        <div>
+            <table v-if="items != false">
+                <tr>
+                    <th>Application id</th>
+                    <th>Key</th>
+                    <th>Expired</th>
+                    <th>Delete</th>
+                </tr>
+                <tr v-for="item in items">
+                    <td>{{ item.app_id }}</td>
+                    <td v-if="item.key">{{ item.key }}</td>
+                    <td v-if="!item.key">Get key</td>
+                    <td>{{ item.expired ? item.expired : "======" }}</td>
+                    <td>Delete</td>
+                </tr>
+            </table>
+            <p v-if="items == false">Loading...</p>
+        </div>
+    </div>
+</div>
+
+<div id="page">
+    <vk-app-list></vk-app-list>
+</div>
 
 <script>
-    let url = `https://oauth.vk.com/authorize?client_id=1&display=page&redirect_uri=http://example.com/callback&scope=friends&response_type=code&v=5.69`
+    let url = `https://oauth.vk.com/authorize?client_id=1&display=page&redirect_uri=http://example.com/callback&scope=friends&response_type=code&v=5.69`;
+
+    Vue.component('vk-app-list', {
+        template: "#vk-app-list-template",
+
+        data: function (){
+            return {
+                items: []
+            }
+        },
+
+        created: function() {
+            console.log("Created");
+            let vm = this;
+            axios.get(server + "/vk_app").then(function (data) {
+                let json = data.data;
+                vm.items = json.items;
+            })
+        }
+    });
+
+    new Vue({
+        el: '#page'
+    })
+
 </script>
 </body>
 </html>
