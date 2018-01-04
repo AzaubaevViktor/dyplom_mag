@@ -1,0 +1,14 @@
+### Get vk application from api
+
+GET http://172.20.0.1:5000/vk_app
+
+### put vk application into api
+
+POST http://172.20.0.1:5000/vk_app
+Content-Type: application/json
+
+{
+    "app_id": 5153164
+}
+
+###

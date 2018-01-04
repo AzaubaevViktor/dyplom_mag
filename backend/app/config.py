@@ -5,6 +5,6 @@ class Debug:
 
     KONCH_SHELL = "ipy"
 
-    SQLALCHEMY_DATABASE_URI = "postgresql://postgres/dyplom"
+    SQLALCHEMY_DATABASE_URI = "postgresql://admin:admin@postgres/dyplom"
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
